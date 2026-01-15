@@ -1,6 +1,16 @@
 ActiveAdmin.register Student do
   menu parent: 'Student Management', priority: 1
 
+  active_admin_import :validate => false,
+    :before_batch_import => proc { |import|
+      import.csv_lines.length.times do |i|
+        import.csv_lines[i][3] = Student.new(:password => import.csv_lines[i][3]).encrypted_password
+      end
+    },
+    :timestamps=> true,
+    :batch_size => 4000
+  
+
   # Permitted parameters for create/update
   permit_params :first_name, :middle_name, :last_name, :email, :password, :password_confirmation,
                 :gender, :date_of_birth, :place_of_birth, :moblie_number, :alternative_moblie_number,
