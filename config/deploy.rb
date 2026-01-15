@@ -4,7 +4,7 @@ lock "~> 3.17.3"
 
 set :application, "master"
 # set :ssh_options, { :forward_agent => true }
-set :repo_url, "https://github.com/senaygui/nuf_africa_portal.git"
+set :repo_url, "https://github.com/senaygui/nuf-new-portal.git"
 
 #set :git_strategy, Capistrano::Git::SubmoduleStrategy
 
