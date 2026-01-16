@@ -38,7 +38,7 @@ ActiveAdmin.register Student do
   scope :active
   scope :inactive
   scope :suspended
-  scope :recently_added
+  # scope :recently_added
 
   # Index page
   index do
