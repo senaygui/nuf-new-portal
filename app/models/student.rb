@@ -52,7 +52,7 @@ class Student < ApplicationRecord
   
   # Scopes
   scope :recently_added, -> { where('created_at >= ?', 1.week.ago) }
-  scope :active, -> { where(account_status: 'active') }
+  scope :active, -> { where(account_status: 'Active') }
   scope :inactive, -> { where(account_status: 'inactive') }
   scope :suspended, -> { where(account_status: 'suspended') }
   scope :by_program, ->(program_id) { where(program_id: program_id) if program_id.present? }
