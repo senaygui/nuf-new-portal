@@ -6,7 +6,7 @@ ActiveAdmin.register_page 'Dashboard' do
       column do
         panel 'Summary' do
           total_students = Student.count
-          active_students = Student.where(account_status: 'active').count
+          active_students = Student.where(account_status: 'Active').count
           graduated_students = Student.where(graduation_status: 'graduated').count
           paid_invoices = nil
           unpaid_invoices = nil

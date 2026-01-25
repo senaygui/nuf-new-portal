@@ -141,10 +141,10 @@ ActiveAdmin.register Student do
             column :course do |sc|
               sc.course&.course_order || sc.course_order
             end
-            column :created_by do |sc|
-              sc.created_by || 'system'
-            end
-            column :created_at
+            # column :created_by do |sc|
+            #   sc.created_by || 'system'
+            # end
+            # column :created_at
           end
         end
         panel 'Invoices' do

@@ -15,7 +15,7 @@ ActiveAdmin.register Invoice do
   scope :approved
   scope :denied
   scope :incomplete
-  scope :due_date_passed
+  # scope :due_date_passed
   scope :recently_added
 
   # Filters
