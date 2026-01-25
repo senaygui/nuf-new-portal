@@ -9,11 +9,11 @@ class Ability
     when 'admin'
       # can :manage, ActiveAdmin::Page, name: "Calendar", namespace_name: "admin"
       can :manage, CourseRegistration
-      can :manage, StudentGrade
+      # can :manage, StudentGrade
       can :manage, AdminUser
       can :manage, ActiveAdmin::Page, name: 'InstructorReport', namespace_name: 'admin'
       can :manage, ActiveAdmin::Page, name: 'Dashboard', namespace_name: 'admin'
-      can :manage, ActiveAdmin::Page, name: 'StudentStats', namespace_name: 'admin'
+      # can :manage, ActiveAdmin::Page, name: 'StudentStats', namespace_name: 'admin'
       can :manage, ActiveAdmin::Page, name: 'Graduation', namespace_name: 'admin'
       can :manage, ActiveAdmin::Page, name: 'AssignSection', namespace_name: 'admin'
 
@@ -21,7 +21,7 @@ class Ability
       can :manage, Course
       can :manage, Student
       can :manage, PaymentMethod
-      can :manage, Batch
+      # can :manage, Batch
       can :manage, Invoice
     when 'instructor'
       can :manage, ActiveAdmin::Page, name: 'Dashboard', namespace_name: 'admin'
