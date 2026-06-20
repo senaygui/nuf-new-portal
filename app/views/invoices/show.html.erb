@@ -120,7 +120,7 @@
                   <strong><%= @invoice.payment_transaction.account_holder_fullname%></strong><br>
                   Account Number: <%= @invoice.payment_transaction.account_number %><br>
                   Phone: <%= @invoice.payment_transaction.phone_number%><br>
-                  Payment Method: <%= @invoice.payment_transaction.payment_method.bank_name%>
+                  Payment Method: <%= @invoice.payment_transaction.payment_method&.bank_name || 'Online Payment' %>
                 </address>
               <%end%>
             </div>
@@ -162,10 +162,9 @@
 								
 							</button> -->
               <% if !@invoice.payment_transaction.present? || @invoice.invoice_status == "denied"%>
-                <%= link_to '<i class="far fa-credit-card"></i> Submit Payment'.html_safe, {controller: "payment_methods", action: "index", invoice_id: @invoice.id}, class: "btn btn-success float-right"%>
-                <!-- <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
-									<i class="fas fa-download"></i> Generate PDF
-								</button> -->
+                <%= button_to chapa_initialize_path(@invoice), method: :post, class: "btn btn-success float-right px-4", form_class: "d-inline float-right", style: "background-color: #00A65A; border: none; font-weight: bold;" do %>
+                  <i class="fas fa-credit-card mr-2"></i> Pay with Chapa
+                <% end %>
               <%end%>
             </div>
           </div>

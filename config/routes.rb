@@ -279,6 +279,12 @@ Rails.application.routes.draw do
   resources :class_schedule_with_files
   resources :semester_registrations
   resources :invoices
+  
+  # Chapa Payment Routes
+  post 'chapa/initialize/:invoice_id', to: 'chapa_payments#initialize_payment', as: 'chapa_initialize'
+  get 'chapa/verify', to: 'chapa_payments#verify', as: 'chapa_verify'
+  post 'chapa/webhook', to: 'chapa_payments#webhook', as: 'chapa_webhook'
+
   resources :profiles
   resources :grade_changes, only: %i[new create]
   resources :payment_methods
