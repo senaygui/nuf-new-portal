@@ -150,27 +150,27 @@ class Student < ApplicationRecord
   # Generate a unique student ID
   def student_id_generator
     if !student_id.present?
+      new_student_id = nil
       begin
-        self.student_id = "#{program.program_code}/#{SecureRandom.random_number(1000..10_000)}/#{Time.now.strftime('%y')}"
-      end while Student.where(student_id:).exists?
+        new_student_id = "#{program&.program_code || 'STD'}/#{SecureRandom.random_number(1000..10_000)}/#{Time.now.strftime('%y')}"
+      end while Student.where(student_id: new_student_id).exists?
+      
+      persisted? ? update_column(:student_id, new_student_id) : (self.student_id = new_student_id)
     end
   end
   
   # Assign a batch to the student after creation if not already assigned
   def assign_batch
     return if self.batch_id.present?
+
     today = Date.current
-    # Find the batch for the student's program where today is between starting_date and ending_date
-    if self.program_id.present?
-      batch = Batch.where(program_id: self.program_id)
-                   .where('starting_date <= ? AND ending_date >= ?', today, today)
-                   .order(starting_date: :desc).first
-      self.update_column(:batch_id, batch.id) if batch
-    else
-      # If no program, assign to any batch where today is between starting_date and ending_date
-      batch = Batch.where('starting_date <= ? AND ending_date >= ?', today, today)
-                   .order(starting_date: :desc).first
-      self.update_column(:batch_id, batch.id) if batch
+    query = Batch.where('starting_date <= ? AND ending_date >= ?', today, today)
+    query = query.where(program_id: program_id) if program_id.present?
+    
+    batch = query.order(starting_date: :desc).first
+    
+    if batch
+      persisted? ? update_column(:batch_id, batch.id) : (self.batch_id = batch.id)
     end
   end
   

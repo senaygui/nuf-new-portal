@@ -7,7 +7,7 @@ ActiveAdmin.register Course do
     column :course_title
     column :course_code
     column :program, sortable: true do |m|
-      link_to m.program.program_name, [:admin, m.program]
+      link_to m.program.program_name, [:admin, m.program] if m.program
     end
     column :course_order
     column :course_starting_date
@@ -57,7 +57,7 @@ ActiveAdmin.register Course do
   show title: :course_title do
     attributes_table do
       row :program do |m|
-        link_to m.program.program_name, [:admin, m.program]
+        link_to m.program.program_name, [:admin, m.program] if m.program
       end
       row :course_title
       row :course_code

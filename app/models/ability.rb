@@ -21,7 +21,7 @@ class Ability
       can :manage, Course
       can :manage, Student
       can :manage, PaymentMethod
-      # can :manage, Batch
+      can :manage, Batch
       can :manage, Invoice
     when 'instructor'
       can :manage, ActiveAdmin::Page, name: 'Dashboard', namespace_name: 'admin'

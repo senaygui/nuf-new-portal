@@ -56,10 +56,12 @@
       const ethiopianPattern = /^\+2519\d{8}$/;
       const errorMsg = document.getElementById('moblie-number-error');
       if (!ethiopianPattern.test(cleaned)) {
-        input.classList.add('error');
-        if (errorMsg) {
-          errorMsg.style.display = 'block';
-          errorMsg.textContent = 'Enter a valid Ethiopian mobile number (+251 9XX XXX XXX)';
+        if (input.dataset.touched) {
+          input.classList.add('error');
+          if (errorMsg) {
+            errorMsg.style.display = 'block';
+            errorMsg.textContent = 'Enter a valid Ethiopian mobile number (+251 9XX XXX XXX)';
+          }
         }
         return false;
       } else {
@@ -71,10 +73,10 @@
 
     function validateRequiredFields() {
       let valid = true;
-      // Helper to check and mark error
       function checkField(field) {
-        if (!field || !field.value.trim()) {
-          if (field) field.classList.add('error');
+        if (!field) return;
+        if (!field.value.trim()) {
+          if (field.dataset.touched) field.classList.add('error');
           valid = false;
         } else {
           field.classList.remove('error');
@@ -87,13 +89,18 @@
         const today = new Date();
         const minDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
         if (dob > minDate) {
-          dateOfBirth.classList.add('error');
-          if (dobError) dobError.style.display = 'inline';
+          if (dateOfBirth.dataset.touched) {
+            dateOfBirth.classList.add('error');
+            if (dobError) dobError.style.display = 'inline';
+          }
           valid = false;
         } else {
           dateOfBirth.classList.remove('error');
           if (dobError) dobError.style.display = 'none';
         }
+      } else if (dateOfBirth && !dateOfBirth.value) {
+        if (dateOfBirth.dataset.touched) dateOfBirth.classList.add('error');
+        valid = false;
       }
       // Validate mobile number
       if (!validateMoblieNumber(moblieNumber)) valid = false;
@@ -106,10 +113,12 @@
       const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{5,20}$/;
       let valid = regex.test(value);
       if (!valid) {
-        password.classList.add('error');
-        passwordRequirements.classList.remove('valid');
-        passwordRequirements.classList.add('error');
-        passwordRequirements.style.display = 'block';
+        if (password.dataset.touched) {
+          password.classList.add('error');
+          passwordRequirements.classList.remove('valid');
+          passwordRequirements.classList.add('error');
+          passwordRequirements.style.display = 'block';
+        }
       } else {
         password.classList.remove('error');
         passwordRequirements.classList.remove('error');
@@ -122,10 +131,14 @@
     function checkPasswordMatch() {
       let match = password.value === passwordConfirmation.value;
       if (!match) {
-        passwordConfirmation.classList.add('is-invalid');
-        if (passwordMatchError) passwordMatchError.style.display = 'block';
+        if (passwordConfirmation.dataset.touched && passwordConfirmation.value.trim() !== '') {
+          passwordConfirmation.classList.add('is-invalid', 'error');
+          if (passwordMatchError) passwordMatchError.style.display = 'block';
+        } else if (passwordConfirmation.dataset.touched) {
+          passwordConfirmation.classList.add('error');
+        }
       } else {
-        passwordConfirmation.classList.remove('is-invalid');
+        passwordConfirmation.classList.remove('is-invalid', 'error');
         if (passwordMatchError) passwordMatchError.style.display = 'none';
       }
       return match;
@@ -142,10 +155,14 @@
       let valid = true;
       emailTaken = false;
       if (!validateEmailFormat(value)) {
-        email.classList.add('error');
-        if (emailMsg) {
-          emailMsg.textContent = 'Invalid email format.';
-          emailMsg.style.color = '#e53935';
+        if (email.dataset.touched) {
+          email.classList.add('error');
+          if (emailMsg && value.length > 0) {
+            emailMsg.textContent = 'Invalid email format.';
+            emailMsg.style.color = '#e53935';
+          } else if (emailMsg) {
+            emailMsg.textContent = '';
+          }
         }
         valid = false;
       } else {
@@ -154,7 +171,7 @@
           .then(function(response) { return response.json(); })
           .then(function(data) {
             if (data.taken) {
-              email.classList.add('error');
+              if (email.dataset.touched) email.classList.add('error');
               if (emailMsg) {
                 emailMsg.textContent = 'This email is already registered.';
                 emailMsg.style.color = '#e53935';
@@ -194,8 +211,14 @@
 
     [firstName, middleName, lastName, dateOfBirth, password, passwordConfirmation, city, moblieNumber].forEach(function(input) {
       if (input) {
+        input.addEventListener('focus', function() { 
+          input.dataset.touched = 'true'; 
+        });
         input.addEventListener('input', updateSubmitState);
-        input.addEventListener('blur', updateSubmitState);
+        input.addEventListener('blur', function() {
+          input.dataset.touched = 'true';
+          updateSubmitState();
+        });
       }
     });
     // Real-time validation for mobile number
@@ -207,11 +230,13 @@
     setPhoneMask(moblieNumber);
     setPhoneMask(document.querySelector('[name="student[alternative_moblie_number]"]'));
     if (email) {
+      email.addEventListener('focus', function() { email.dataset.touched = 'true'; });
       email.addEventListener('input', function() {
         checkEmail();
         updateSubmitState();
       });
       email.addEventListener('blur', function() {
+        email.dataset.touched = 'true';
         checkEmail();
         updateSubmitState();
       });
@@ -296,6 +321,97 @@
       vertical-align: baseline;
       width: auto;
     }
+</style>
+
+<style>
+  /* Modern Form Styling */
+  .card-body .form-control, .card-body .custom-select {
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 14px 18px;
+    height: auto;
+    font-size: 1.05rem;
+    color: #334155;
+    background-color: #f8fafc;
+    transition: all 0.3s ease;
+    box-shadow: none;
+  }
+  .card-body .form-control:focus, .card-body .custom-select:focus {
+    border-color: #009fe3;
+    box-shadow: 0 0 0 4px rgba(0, 159, 227, 0.15);
+    background-color: #ffffff;
+    transform: translateY(-2px);
+    outline: none;
+  }
+  .card-body .form-control:hover:not(:focus), .card-body .custom-select:hover:not(:focus) {
+    border-color: #cbd5e1;
+    background-color: #ffffff;
+  }
+  .card-body label {
+    font-weight: 700;
+    color: #475569;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+    letter-spacing: 0.3px;
+    display: inline-block;
+  }
+  .card-body .required-asterisk {
+    color: #ff9900 !important;
+    font-weight: 900;
+    margin-left: 4px;
+    font-size: 1.1em;
+  }
+  .card-body .form-group {
+    margin-bottom: 1.8rem;
+    position: relative;
+  }
+  
+  /* Validation state enhancements */
+  .card-body .form-control.error {
+    border-color: #ef4444 !important;
+    background-color: #fef2f2 !important;
+    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.15) !important;
+    animation: shake 0.4s ease-in-out;
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    75% { transform: translateX(4px); }
+  }
+
+  .card-outline.card-primary {
+    border-top: 5px solid #009fe3;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    background: #ffffff;
+    overflow: hidden;
+  }
+  .card-outline .card-header {
+    background: #ffffff;
+    border-bottom: 1px solid #f1f5f9;
+    padding: 1.5rem 2rem;
+  }
+  .card-outline .card-title {
+    color: #1e293b;
+    font-size: 1.4rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .card-outline .card-title i {
+    color: #ff9900;
+  }
+  .card-body {
+    padding: 2rem !important;
+  }
+  .form-control::placeholder {
+    color: #94a3b8;
+    opacity: 0.8;
+  }
 </style>
 
 <div class="card card-outline card-primary">

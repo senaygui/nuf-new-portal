@@ -19,19 +19,39 @@
     opacity: 0.92;
     background: linear-gradient(90deg, #009fe3 0%, #ff9900 100%) !important;
   }
-  .fixed-submit {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100vw;
-    z-index: 9999;
-    background: rgba(255,255,255,0.95);
-    box-shadow: 0 -2px 8px rgba(0,0,0,0.07);
-    padding: 18px 40px 18px 0;
-    margin: 0;
+  .form-actions-wrapper {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid #edf2f7;
+    padding: 24px;
+    margin-top: 20px;
+    border-radius: 12px;
     display: flex;
     justify-content: flex-end;
-    align-items: center;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.02);
+  }
+  .btn-submit-modern {
+    background: linear-gradient(135deg, #ff9900 0%, #009fe3 100%) !important;
+    color: #fff !important;
+    border: none;
+    padding: 16px 48px;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    border-radius: 50px;
+    box-shadow: 0 8px 20px rgba(0, 159, 227, 0.25);
+    transition: all 0.3s ease;
+  }
+  .btn-submit-modern:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 25px rgba(0, 159, 227, 0.35);
+    background: linear-gradient(135deg, #e68a00 0%, #008cc9 100%) !important;
+  }
+  .btn-submit-modern:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
   }
   /* Enhanced card styles */
   .card.card-primary {
@@ -114,7 +134,7 @@
                 New Student Admission Forms
               </h3>
             </div>
-            <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name),wrapper: :input_group, multiple: true) do |f| %>
+            <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), wrapper: :input_group, html: { multipart: true }) do |f| %>
               <div class="card-body p-0">
                 <div class="">
                   
@@ -175,8 +195,8 @@
                           </div>
                           <div class="col-12 col-md-9">
                             <%= render 'basic', f: f %>
-                            <div class="fixed-submit">
-                              <%= f.button :submit, "Register Now", class: "btn btn-primary", id: "student-submit", title: "Fill the required form fields" %>
+                            <div class="form-actions-wrapper">
+                              <%= f.button :submit, "Register Now", class: "btn btn-submit-modern", id: "student-submit", title: "Fill the required form fields" %>
                             </div>
                           </div>
                         </div>

@@ -125,7 +125,7 @@ ActiveAdmin.register Invoice do
             row :student_full_name
             row :student_id_number
             row :program do |m|
-              link_to m.program.program_name, [:admin, m.program]
+              link_to m.program.program_name, [:admin, m.program] if m.program
             end
             row :batch do |m|
               link_to m.batch.batch_title, [:admin, m.batch]

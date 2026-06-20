@@ -47,14 +47,14 @@
                         </div>
                       <%end%>
                     <%else%>
-                      <%= simple_form_for(current_student, url: update_highschool_transcript_path, wrapper: :input_group, method: :put,multiple: true) do |f| %>
+                      <%= simple_form_for(current_student, url: update_highschool_transcript_path, wrapper: :input_group, method: :put, html: { multipart: true }) do |f| %>
                         <div class="flex">
                           <%= f.input :highschool_transcript, as: :file, label: "Add Document",class: 'form-control', input_html: {onchange: 'this.form.submit()'}%>
                         </div>
                       <%end%>
                     <%end%>
                     <%if current_student.allow_editing?%>
-                      <%= simple_form_for(current_student, url: update_highschool_transcript_path, wrapper: :input_group, method: :put,multiple: true) do |f| %>
+                      <%= simple_form_for(current_student, url: update_highschool_transcript_path, wrapper: :input_group, method: :put, html: { multipart: true }) do |f| %>
                         <div class="flex">
                           <%= f.input :highschool_transcript, as: :file, label: "Add Document",class: 'form-control', input_html: {onchange: 'this.form.submit()'}%>
                         </div>
@@ -85,14 +85,14 @@
                         </div>
                       <%end%>
                     <%else%>
-                      <%= simple_form_for(current_student, url: update_grade_10_matric_path, wrapper: :input_group, method: :put,multiple: true) do |f| %>
+                      <%= simple_form_for(current_student, url: update_grade_10_matric_path, wrapper: :input_group, method: :put, html: { multipart: true }) do |f| %>
                         <div class="flex">
                           <%= f.input :grade_10_matric, as: :file, label: "Add Document",class: 'form-control',input_html: {onchange: 'this.form.submit()'}%>
                         </div>
                       <%end%>
                     <%end%>
                     <% if current_student.allow_editing?%>
-                      <%= simple_form_for(current_student, url: update_grade_10_matric_path, wrapper: :input_group, method: :put,multiple: true) do |f| %>
+                      <%= simple_form_for(current_student, url: update_grade_10_matric_path, wrapper: :input_group, method: :put, html: { multipart: true }) do |f| %>
                         <div class="flex">
                           <%= f.input :grade_10_matric, as: :file, label: "Add Document",class: 'form-control',input_html: {onchange: 'this.form.submit()'}%>
                         </div>
@@ -123,14 +123,14 @@
                         </div>
                       <%end%>
                     <%else%>
-                      <%= simple_form_for(current_student, url: update_grade_12_matric_path, wrapper: :input_group, method: :put,multiple: true) do |f| %>
+                      <%= simple_form_for(current_student, url: update_grade_12_matric_path, wrapper: :input_group, method: :put, html: { multipart: true }) do |f| %>
                         <div class="flex">
                           <%= f.input :grade_12_matric, as: :file, label: "Add Document",class: 'form-control',input_html: {onchange: 'this.form.submit()'}%>
                         </div>
                       <%end%>
                     <%end%>
                     <% if current_student.allow_editing?%>
-                      <%= simple_form_for(current_student, url: update_grade_12_matric_path, wrapper: :input_group, method: :put,multiple: true) do |f| %>
+                      <%= simple_form_for(current_student, url: update_grade_12_matric_path, wrapper: :input_group, method: :put, html: { multipart: true }) do |f| %>
                         <div class="flex">
                           <%= f.input :grade_12_matric, as: :file, label: "Add Document",class: 'form-control',input_html: {onchange: 'this.form.submit()'}%>
                         </div>
@@ -165,14 +165,14 @@
                           </div>
                         <%end%>
                       <%else%>
-                        <%= simple_form_for(current_student, url: update_degree_certificate_path, wrapper: :input_group, method: :put,multiple: true) do |f| %>
+                        <%= simple_form_for(current_student, url: update_degree_certificate_path, wrapper: :input_group, method: :put, html: { multipart: true }) do |f| %>
                           <div class="flex">
                             <%= f.input :degree_certificate, as: :file, label: "Undergraduate degree certificate",class: 'form-control',input_html: {onchange: 'this.form.submit()'}%>
                           </div>
                         <%end%>
                       <%end%>
                       <%if current_student.allow_editing?%>
-                        <%= simple_form_for(current_student, url: update_degree_certificate_path, wrapper: :input_group, method: :put,multiple: true) do |f| %>
+                        <%= simple_form_for(current_student, url: update_degree_certificate_path, wrapper: :input_group, method: :put, html: { multipart: true }) do |f| %>
                           <div class="flex">
                             <%= f.input :degree_certificate, as: :file, label: "Undergraduate degree certificate",class: 'form-control',input_html: {onchange: 'this.form.submit()'}%>
                           </div>
@@ -204,14 +204,14 @@
                         </div>
                       <%end%>
                     <%else%>
-                      <%= simple_form_for(current_student, url: update_diploma_certificate_path, wrapper: :input_group, method: :put,multiple: true) do |f| %>
+                      <%= simple_form_for(current_student, url: update_diploma_certificate_path, wrapper: :input_group, method: :put, html: { multipart: true }) do |f| %>
                         <div class="flex">
                           <%= f.input :diploma_certificate, as: :file, label: "Add Document",class: 'form-control',input_html: {onchange: 'this.form.submit()'}%>
                         </div>
                       <%end%>
                     <%end%>
                     <%if current_student.allow_editing?%>
-                      <%= simple_form_for(current_student, url: update_diploma_certificate_path, wrapper: :input_group, method: :put,multiple: true) do |f| %>
+                      <%= simple_form_for(current_student, url: update_diploma_certificate_path, wrapper: :input_group, method: :put, html: { multipart: true }) do |f| %>
                         <div class="flex">
                           <%= f.input :diploma_certificate, as: :file, label: "Add Document",class: 'form-control',input_html: {onchange: 'this.form.submit()'}%>
                         </div>
@@ -242,14 +242,14 @@
                         </div>
                       <%end%>
                     <%else%>
-                      <%= simple_form_for(current_student, url: update_coc_path, wrapper: :input_group, method: :put,multiple: true) do |f| %>
+                      <%= simple_form_for(current_student, url: update_coc_path, wrapper: :input_group, method: :put, html: { multipart: true }) do |f| %>
                         <div class="flex">
                           <%= f.input :coc, as: :file, label: "Add Document",class: 'form-control',input_html: {onchange: 'this.form.submit()'}%>
                         </div>
                       <%end%>
                     <%end%>
                     <% if current_student.allow_editing?%>
-                      <%= simple_form_for(current_student, url: update_coc_path, wrapper: :input_group, method: :put,multiple: true) do |f| %>
+                      <%= simple_form_for(current_student, url: update_coc_path, wrapper: :input_group, method: :put, html: { multipart: true }) do |f| %>
                         <div class="flex">
                           <%= f.input :coc, as: :file, label: "Add Document",class: 'form-control',input_html: {onchange: 'this.form.submit()'}%>
                         </div>

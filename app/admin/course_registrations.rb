@@ -57,7 +57,7 @@ ActiveAdmin.register CourseRegistration do
     end
     column :course_title
     column :program do |c|
-      c.program.program_name
+      c.program&.program_name
     end
     column :enrollment_status
     column "Created At", sortable: true do |c|
