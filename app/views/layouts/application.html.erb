@@ -88,5 +88,16 @@
         if (flash) { flash.style.display = 'none'; }
       }, 5000); // 5 seconds
     });
+
+    // Global Page Transitions
+    document.addEventListener('turbolinks:load', function() {
+      document.body.classList.remove('page-transition-leave');
+      document.body.classList.add('page-transition-enter');
+    });
+
+    document.addEventListener('turbolinks:before-cache', function() {
+      document.body.classList.remove('page-transition-enter');
+      document.body.classList.add('page-transition-leave');
+    });
   </script>
 </html>
