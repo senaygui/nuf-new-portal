@@ -18,13 +18,33 @@
               </li>
             </ul>
                 <% if current_student.student_id.present? && current_student.student_password.present? %>
-                  <form action="https://www.nuf.edu.et/login/index.php" method="POST" target="_blank" class="d-inline">
-                    <input type="hidden" name="username" value="<%= current_student.student_id.downcase %>">
-                    <input type="hidden" name="password" value="<%= current_student.student_password %>">
-                    <button type="submit" class="btn btn-warning animate__animated animate__pulse animate__infinite mx-2" style="min-width:180px; font-size:1.1rem; font-weight:600; color: #212529;">
-                      <i class="fas fa-sign-in-alt mr-2"></i> Go to Learning Platform
-                    </button>
-                  </form>
+                  <button onclick="lmsLogin(this)" data-password="<%= current_student.student_password %>" class="btn btn-warning animate__animated animate__pulse animate__infinite mx-2" style="min-width:180px; font-size:1.1rem; font-weight:600; color: #212529;">
+                    <i class="fas fa-sign-in-alt mr-2"></i> Go to Learning Platform
+                  </button>
+                  <script>
+                    function lmsLogin(btn) {
+                      // Copy password to clipboard
+                      var password = btn.getAttribute('data-password');
+                      var tempInput = document.createElement('input');
+                      tempInput.value = password;
+                      document.body.appendChild(tempInput);
+                      tempInput.select();
+                      document.execCommand('copy');
+                      document.body.removeChild(tempInput);
+                      
+                      // Change button text to show success
+                      var originalHTML = btn.innerHTML;
+                      btn.innerHTML = '<i class="fas fa-check mr-2"></i> Password Copied! Redirecting...';
+                      btn.classList.remove('animate__pulse', 'animate__infinite');
+                      
+                      // Open Moodle after a brief delay
+                      setTimeout(function() {
+                        window.open("https://www.nuf.edu.et/login/index.php", "_blank");
+                        btn.innerHTML = originalHTML;
+                        btn.classList.add('animate__pulse', 'animate__infinite');
+                      }, 1500);
+                    }
+                  </script>
                 <% else %>
                   <%= link_to "<i class='fas fa-sign-in-alt mr-2'></i> Go to Learning Platform".html_safe, "https://www.nuf.edu.et/", target: "_blank", class: "btn btn-warning animate__animated animate__pulse animate__infinite mx-2", style: 'min-width:180px; font-size:1.1rem; font-weight:600; color: #212529;' %>
                 <% end %>
