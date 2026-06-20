@@ -80,7 +80,7 @@ class ChapaPaymentsController < ApplicationController
     
     if result["status"] == "success"
       handle_successful_payment(@invoice, tx_ref)
-      redirect_to invoice_path(@invoice), notice: "Payment was successfully processed via Chapa."
+      redirect_to root_path, notice: "Payment was successfully processed via Chapa."
     else
       Rails.logger.error("Chapa Verification Failed: #{result.inspect}")
       redirect_to invoice_path(@invoice), alert: "Payment verification failed: #{result["message"] || 'Unknown error'}. Please contact support."
